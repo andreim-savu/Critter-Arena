@@ -24,13 +24,18 @@ public class TileManager : MonoBehaviour
     {
         switch (GameManager.Instance.State)
         {
-            case GameState.AwaitAction:
-                foreach (KeyValuePair<Vector2, Tile> kvPair in tiles)
+            case GameState.PlayerTurn:
+                switch (PlayerManager.Instance.State)
                 {
-                    kvPair.Value.ResetTile();
+                    case PlayerState.AwaitAction:
+                        foreach (KeyValuePair<Vector2, Tile> kvPair in tiles)
+                        {
+                            kvPair.Value.ResetTile();
+                        }
+                        break;
+                    case PlayerState.CritterSelected:
+                        break;
                 }
-                break;
-            case GameState.UnitSelected:
                 break;
         }
     }
@@ -44,8 +49,8 @@ public class TileManager : MonoBehaviour
         Critter c3 = Instantiate(_testCritter).GetComponent<Critter>();
 
         c1.PlaceCritter(GetTile(new Vector2(4, 4)));
-        c2.PlaceCritter(GetTile(new Vector2(10, 5)));
-        c3.PlaceCritter(GetTile(new Vector2(8, 1)));
+        c2.PlaceCritter(GetTile(new Vector2(3, 5)));
+        c3.PlaceCritter(GetTile(new Vector2(7, 1)));
 
         foreach (KeyValuePair<Vector2, Tile> kvPair in tiles)
         {

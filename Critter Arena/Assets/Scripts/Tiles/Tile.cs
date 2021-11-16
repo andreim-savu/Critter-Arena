@@ -55,26 +55,31 @@ public abstract class Tile : MonoBehaviour
 
     private void Select()
     {
-        switch(GameManager.Instance.State)
+        switch (GameManager.Instance.State)
         {
-            case GameState.AwaitAction:
-                if (!critter) { return; }
-                critter.SelectCritter();
-                break;
-            case GameState.UnitSelected:
-                if (critter)
+            case GameState.PlayerTurn:
+                switch (PlayerManager.Instance.State)
                 {
-                    GameManager.Instance.UpdateGameState(GameState.AwaitAction);
-                    critter.SelectCritter();
-                }
+                    case PlayerState.AwaitAction:
+                        if (!critter) { return; }
+                        critter.SelectCritter();
+                        break;
+                    case PlayerState.CritterSelected:
+                        if (critter)
+                        {
+                            PlayerManager.Instance.UpdatPlayerState(PlayerState.AwaitAction);
+                            critter.SelectCritter();
+                        }
 
-                else
-                {
-                    if (valid)
-                    {
-                        GameManager.Instance.SelectedCritter.MoveCritter(this);
-                    }
-                    GameManager.Instance.UpdateGameState(GameState.AwaitAction);
+                        else
+                        {
+                            if (valid)
+                            {
+                                GameManager.Instance.SelectedCritter.MoveCritter(this);
+                            }
+                            PlayerManager.Instance.UpdatPlayerState(PlayerState.AwaitAction);
+                        }
+                        break;
                 }
                 break;
         }

@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        UpdateGameState(GameState.PlayerTurn);
+    }
+
     public void UpdateGameState(GameState newState)
     {
         State = newState;
@@ -28,6 +33,12 @@ public class GameManager : MonoBehaviour
 
 public enum GameState
 {
-    AwaitAction,
-    UnitSelected
+    PlaceUnits,
+    GameStart,
+    PlayerTurn,
+    EnemyTurn,
+    EndTurn,
+    CheckEnd,
+    Victory,
+    Defeat
 }

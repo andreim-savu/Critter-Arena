@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 public class Critter : MonoBehaviour
 {
     public int range = 3;
-
     public bool isMoving;
+    float moveTime = 0.2f;
 
     Tile currentTile;
 
@@ -17,8 +17,6 @@ public class Critter : MonoBehaviour
         currentTile = tile;
         tile.PlaceCritter(this);
     }
-
-    float moveTime = 0.2f;
 
     public async void MoveCritter(Tile tile)
     {
@@ -51,7 +49,7 @@ public class Critter : MonoBehaviour
     {
         GameManager.Instance.SelectedCritter = this;
         GetAvailableTiles();
-        GameManager.Instance.UpdateGameState(GameState.UnitSelected);
+        PlayerManager.Instance.UpdatPlayerState(PlayerState.CritterSelected);
     }
 
 
